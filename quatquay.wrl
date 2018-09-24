@@ -1,0 +1,88 @@
+#VRML V2.0 utf8
+PROTO canh [
+		field SFVec3f trans -2 -0.55 0
+		field SFRotation rota 0 0 1 0
+	  ]
+{
+	Transform {
+		translation	IS trans
+		rotation IS	rota
+		scale 1 1 1
+		children [
+			Shape {
+				appearance Appearance {
+					material Material {
+						diffuseColor 1 0 3
+					}
+				}
+				geometry Box {size 4 0.05 0.5}
+			}
+		]
+	}
+}
+DEF	fan Transform {
+	translation	0 0 0
+	scale 1 1 1
+	rotation 1 0 0 0.261799
+	children [
+		DEF	fanon Transform {
+			translation	0 0 0
+			rotation 0 0 1 0
+			scale 1 1 1
+			children [
+				DEF	tru Shape {
+					appearance Appearance {
+						material Material {
+							diffuseColor 1 1 0
+						}
+					}
+					geometry Box {size 0.2 1 0.2}
+				}
+				DEF	cuccanh Transform {
+					children [
+						DEF	cuc Transform {
+							translation	0 -0.3 0
+							children [
+								Shape {
+									appearance Appearance {
+										material Material {
+											diffuseColor 1 0 3
+										}
+									}
+									geometry Cone {
+										height 0.5
+										bottom TRUE
+										bottomRadius 0.5
+										side TRUE
+									}
+								}
+							]
+						}
+						canh {}
+						canh {
+							trans 2 -0.55 0
+							rota 0 0 1 0
+						}
+					]
+				}
+			]
+		}
+		DEF	gocquay OrientationInterpolator	{
+			key	[0 0.25 0.5 0.75 1.0]
+			keyValue [
+				0 1 0 0,
+				0 1 0 1.5708,
+				0 1 0 3.1416,
+				0 1 0 4.7124,
+				0 1 0 6.2832
+			]
+		}
+		DEF	ts TimeSensor {
+			enabled	TRUE
+			cycleInterval 0.25
+			loop TRUE
+		}
+	]
+}
+ROUTE ts.fraction_changed TO gocquay.set_fraction
+ROUTE gocquay.value_changed	TO cuccanh.rotation

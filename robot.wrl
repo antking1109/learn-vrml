@@ -1,0 +1,48 @@
+#VRML V2.0 utf8
+
+DEF	robot Transform	{
+	translation	0 0 0
+	scale 1 1 1
+	rotation 0 0 1 0
+	children [
+		Shape {
+			geometry Box {
+				size 0.5 0.5 0.5
+			}
+		}
+		Transform {
+			translation	0.5 0 0
+			rotation 0 0 -1 1.57
+			children [ 
+				Shape {
+					geometry Cone {
+						height 1
+						bottom TRUE
+						bottomRadius 0.2
+						side TRUE
+					}
+				}
+			]
+		}							   
+		DEF	or OrientationInterpolator {
+			key	[0 0.15 0.25 0.45 0.55 0.65 0.75 1]
+			keyValue [0 0 0 0,0 0 0 0,0 1 0 -1.57, 0 1 0 -1.57,0 1 0 -3.14,0 1 0 -3.14, 0 1 0 -4.71, 0 1 0 -4.71]
+		}
+
+		DEF	 pos PositionInterpolator {
+			key	[0 0.15 0.25 0.45 0.55 0.65 0.75 1]
+			keyValue [0 0 0, 2 0 0, 2 0 0, 2 0 2,2 0 2,0 0 2,0 0 2, 0 0 0]
+		}
+		DEF	ts TimeSensor {
+			enabled	TRUE
+			cycleInterval 10
+			loop TRUE
+		}
+	]
+	
+
+}
+ROUTE ts.fraction_changed TO or.set_fraction
+ROUTE ts.fraction_changed TO pos.set_fraction
+ROUTE pos.value_changed	TO robot.translation
+ROUTE or.value_changed TO robot.rotation
