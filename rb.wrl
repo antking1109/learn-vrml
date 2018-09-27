@@ -1,0 +1,93 @@
+#VRML V2.0 utf8
+Transform {
+	translation	-0.5 1 0
+	rotation 1 0 0 0.5
+	children [
+		DEF robot Transform {
+			children [
+				DEF	dau Transform {
+					translation	0 0 0
+					children [
+						Transform {
+							children [
+								Shape {
+
+									geometry Sphere	{
+										radius 0.2
+									}
+									appearance Appearance {
+										material Material {
+											diffuseColor .58 .27 .01
+											specularColor .0745 0 0
+											ambientIntensity 0
+											shininess 0
+										}
+									}
+								}
+							]
+						}
+						Transform {
+							translation	0.2 0 0
+							rotation 0 0 -1 1.57
+							children [ 
+								Shape {
+
+									geometry Cone {
+										height 0.5
+										bottom TRUE
+										bottomRadius 0.15
+										side TRUE
+									}
+									appearance Appearance {
+										material Material {
+											diffuseColor .996 0 0
+										}
+									}
+									
+								}
+							]
+						}	
+					]
+				}
+				DEF	than Transform {
+					translation	0 -0.7 0
+					rotation 0 0 1 0
+					children [
+						Shape {
+
+							geometry Box {
+								size 0.5 1 0.5
+							}
+							appearance Appearance {
+								material Material {
+									diffuseColor .39 .46 .42
+									specularColor .53 .53 .53
+									ambientIntensity .103
+									shininess .93
+								}
+							}
+						}
+					]
+				}
+				DEF	or OrientationInterpolator {
+					key	[0 0.15 0.25 0.45 0.55 0.65 0.75 1]
+					keyValue [0 0 0 0,0 0 0 0,0 1 0 -1.57, 0 1 0 -1.57,0 1 0 -3.14,0 1 0 -3.14, 0 1 0 -4.71, 0 1 0 -4.71]
+				}
+
+				DEF	 pos PositionInterpolator {
+					key	[0 0.15 0.25 0.45 0.55 0.65 0.75 1]
+					keyValue [0 0 0, 3 0 0, 3 0 0, 3 0 3,3 0 3,0 0 3,0 0 3, 0 0 0]
+				}
+				DEF	ts TimeSensor {
+					enabled	TRUE
+					cycleInterval 10
+					loop TRUE
+				}
+			]
+		}
+	]
+}
+ROUTE ts.fraction_changed TO or.set_fraction
+ROUTE ts.fraction_changed TO pos.set_fraction
+ROUTE pos.value_changed	TO robot.translation
+ROUTE or.value_changed TO robot.rotation

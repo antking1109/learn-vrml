@@ -6,24 +6,39 @@ Transform {
 		Shape {
 			geometry Extrusion {
 				  crossSection [
-					0.00	1.00,
-					0.38	0.92 ,
-					0.71	0.71   ,
-					0.92	0.38	,
-					1.00	0.00	 ,
-					0.92	-0.38	  ,
-					0.71	-0.71	   ,
-					0.38	-0.92		,
-					0.00	-1.00		 ,
-					-0.38	-0.92		  ,
-					-0.71	-0.71		   ,
-					-0.92	-0.38			,
-					-1.00	0.00			 ,
-					-0.92	0.38			  ,
-					-0.71	0.71			   ,
-					-0.38	0.92				,
-					0.00	1.00
-
+					1.00	0.00   ,
+					0.98	0.20						,
+					0.92	0.38						 ,
+					0.83	0.56						  ,
+					0.71	0.71						   ,
+					0.56	0.83							,
+					0.38	0.92							 ,
+					0.20	0.98							  ,
+					0.00	1.00							   ,
+					-0.20	0.98								,
+					-0.38	0.92								 ,
+					-0.56	0.83								  ,
+					-0.71	0.71								   ,
+					-0.83	0.56									,
+					-0.92	0.38									 ,
+					-0.98	0.20									  ,
+					-1.00	0.00									   ,
+					-0.98	-0.20										,
+					-0.92	-0.38										 ,
+					-0.83	-0.56										  ,
+					-0.71	-0.71										   ,
+					-0.56	-0.83											,
+					-0.38	-0.92											 ,
+					-0.20	-0.98											  ,
+					0.00	-1.00											   ,
+					0.20	-0.98												,
+					0.38	-0.92												 ,
+					0.56	-0.83												  ,
+					0.71	-0.71												   ,
+					0.83	-0.56													,
+					0.92	-0.38													 ,
+					0.98	-0.20													  ,
+					1.00	0.00
 				  ]
 				  creaseAngle 1
 				  spine	[0 0 0, 0 0.2 0,	0 0.6 0,	0 1.2 0,	0 1.6 0,	0 2 0,		0 2.6 0,	0 3 0,  0 3.3 0,	0 3.6 0,	0 3.9 0,  0 3.6 0, 0 3.3 0, 0 3 0,		0 2.6 0,	0 2 0,		0 1.6 0,	0 1.2 0, 0 0.6 0, 0 0.2 0, 0 0 0]
@@ -62,25 +77,30 @@ Transform {
 						radius 0.3
 					}
 				}
-				
+			
 			]
 		}
 		DEF ts TimeSensor {
-					cycleInterval 1
+					cycleInterval 3
 					enabled	TRUE
 					loop TRUE
 				}
-				DEF oi1 OrientationInterpolator	{
-					 key	[0 0. 25 0.5 1]
-					 keyValue [0 0 1 -0.785398,0 0 1 -0.785398,0 0 1 -1.5708,0 0 1 -1.5708]
-				}
-				DEF pi1 PositionInterpolator {
-		    		 key	[0 0.25 0.5 1]
-					 keyValue [0 0 0,1.5 -1.5 0, 3 -3 0, 3 -6.8 0]
-				}
+		DEF oi1 OrientationInterpolator	{
+			 key	[0 0. 25 0.5 1]
+			 keyValue [0 0 1 -0.785398,0 0 1 -0.785398,0 0 1 -1.5708,0 0 1 -1.5708]
+		}
+		DEF pi1 PositionInterpolator {
+			 key	[0 0.25 0.5 1]
+			 keyValue [0 0 0,1.5 -1.5 0, 3 -3 0, 3 -6.8 0]
+		}
 	]
 }
 ROUTE ts.fraction_changed TO oi1.set_fraction
 ROUTE ts.fraction_changed TO pi1.set_fraction
 ROUTE oi1.value_changed	TO bong.rotation
 ROUTE pi1.value_changed	TO bong.translation
+#ts.fraction_changed : khi ts thay đổi
+#or.set_fraction : or được sét giá trị bằng giá trị từ keyvalue vào
+#or.value_changed :		giá trị or thay đổi thì    bong.rotation : quả bóng  quay
+
+#ROUTE po.value_changed TO bong.translation khi po thay đổi giá trị thì quả bóng di chuyển
