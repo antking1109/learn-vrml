@@ -5,6 +5,9 @@ Transform {
 	children [
 		DEF robot Transform {
 			children [
+				DEF	t TouchSensor {
+					enabled	TRUE
+				}
 				DEF	dau Transform {
 					translation	0 0 0
 					children [
@@ -69,6 +72,7 @@ Transform {
 						}
 					]
 				}
+				
 				DEF	or OrientationInterpolator {
 					key	[0 0.15 0.25 0.45 0.55 0.65 0.75 1]
 					keyValue [0 0 0 0,0 0 0 0,0 1 0 -1.57, 0 1 0 -1.57,0 1 0 -3.14,0 1 0 -3.14, 0 1 0 -4.71, 0 1 0 -4.71]
@@ -82,12 +86,16 @@ Transform {
 					enabled	TRUE
 					cycleInterval 10
 					loop TRUE
+					startTime 0
+					stopTime 1
 				}
 			]
 		}
 	]
 }
+ROUTE t.touchTime TO ts.startTime
 ROUTE ts.fraction_changed TO or.set_fraction
 ROUTE ts.fraction_changed TO pos.set_fraction
 ROUTE pos.value_changed	TO robot.translation
 ROUTE or.value_changed TO robot.rotation
+ROUTE t.touchTime TO ts.stopTime
