@@ -1,0 +1,181 @@
+#VRML V2.0 utf8
+DEF	than Transform {
+	translation	0 -3 0
+	children [
+		Shape	{
+			appearance Appearance {
+				material Material {
+					diffuseColor 0.8 0.8 0.8
+				}
+			}
+			geometry Extrusion {
+				crossSection [
+					1.00	0.00	,
+					0.98	0.20	 ,
+					0.92	0.38	  ,
+					0.83	0.56	   ,
+					0.71	0.71		,
+					0.56	0.83		 ,
+					0.38	0.92		  ,
+					0.20	0.98		   ,
+					0.00	1.00			,
+					-0.20	0.98			 ,
+					-0.38	0.92			  ,
+					-0.56	0.83			   ,
+					-0.71	0.71				,
+					-0.83	0.56				 ,
+					-0.92	0.38				  ,
+					-0.98	0.20				   ,
+					-1.00	0.00					,
+					-0.98	-0.20					 ,
+					-0.92	-0.38					  ,
+					-0.83	-0.56					   ,
+					-0.71	-0.71						,
+					-0.56	-0.83						 ,
+					-0.38	-0.92						  ,
+					-0.20	-0.98						   ,
+					0.00	-1.00							,
+					0.20	-0.98							 ,
+					0.38	-0.92							  ,
+					0.56	-0.83							   ,
+					0.71	-0.71								,
+					0.83	-0.56								 ,
+					0.92	-0.38								  ,
+					0.98	-0.20								   ,
+					1.00	0.00
+				]
+				creaseAngle	1
+				solid FALSE
+				spine [0 0.2 0, 0 0 0, 0 0 0, 0 0.2 0,0 0.2 0, 0 2 0, 0 2.2 0, 0 5 0, 0 5.05 0, 0 5.1 0, 0 5.5 0]
+				scale [1 1, 0.8 0.8,0.5 0.5, 0.3 0.3,1 1, 1 1, 0.9 0.9, 0.3 0.3, 0.5 0.5, 0.3 0.3, 0.3 0.3]
+			}
+		}
+	]
+}
+DEF truquay Transform {
+	translation	0 0 0
+	children [
+		DEF	touch TouchSensor {
+			enabled	TRUE
+		}
+		DEF	nap Transform {
+			translation	0 2.1 0
+			children [
+					Shape {
+					appearance Appearance {
+						material Material {
+							diffuseColor 0.8 0.6 0.1
+						}
+					}
+					geometry Extrusion {
+						crossSection [
+							1.00	0.00	,
+							0.98	0.20	 ,
+							0.92	0.38	  ,
+							0.83	0.56	   ,
+							0.71	0.71		,
+							0.56	0.83		 ,
+							0.38	0.92		  ,
+							0.20	0.98		   ,
+							0.00	1.00			,
+							-0.20	0.98			 ,
+							-0.38	0.92			  ,
+							-0.56	0.83			   ,
+							-0.71	0.71				,
+							-0.83	0.56				 ,
+							-0.92	0.38				  ,
+							-0.98	0.20				   ,
+							-1.00	0.00					,
+							-0.98	-0.20					 ,
+							-0.92	-0.38					  ,
+							-0.83	-0.56					   ,
+							-0.71	-0.71						,
+							-0.56	-0.83						 ,
+							-0.38	-0.92						  ,
+							-0.20	-0.98						   ,
+							0.00	-1.00							,
+							0.20	-0.98							 ,
+							0.38	-0.92							  ,
+							0.56	-0.83							   ,
+							0.71	-0.71								,
+							0.83	-0.56								 ,
+							0.92	-0.38								  ,
+							0.98	-0.20								   ,
+							1.00	0.00	
+						]
+						creaseAngle	1
+						solid FALSE
+						spine [0 0.5 0, 0 0 0, 0 0 0, 0 0.5 0]
+						scale [0.4 0.4, 0.4 0.4, 0.35 0.35, 0.35 0.35]
+					}
+				}
+			]
+		}
+	]
+	
+	
+}
+DEF	time TimeSensor	{
+	enabled	FALSE
+	loop FALSE
+	cycleInterval 1
+	startTime 0
+	stopTime 1
+}
+DEF	timeVao TimeSensor {
+	enabled	FALSE
+	loop FALSE
+	cycleInterval 1
+	startTime 0
+	stopTime 1
+}
+DEF	oiRa OrientationInterpolator {
+	key	[0 1]
+	keyValue [0 0 0 0, 0 1 0 3.14]
+}
+DEF	piRa PositionInterpolator	 {
+	key	[0 1]
+	keyValue [0 0 0, 0 0.5 0]
+}
+DEF	oiVao OrientationInterpolator {
+	key	[0 1]
+	keyValue [0 0 0 0, 0 1 0 -3.14]
+}
+DEF	piVao PositionInterpolator {
+	key	[0 1]
+	keyValue [0 0.5 0, 0 0 0]
+}
+DEF	majs Script	{
+	eventIn	SFBool Bat
+	eventOut SFBool	On
+	eventOut SFBool	Off
+	field SFBool turn FALSE
+	url	"javascript:
+	function Bat(val){
+		if(val){
+			turn = !turn;
+			if(turn)
+			{
+				On = true;
+				Off = false;
+			}else{
+				On = false;
+				Off = true;
+			}
+		}
+	}
+	"
+}
+ROUTE touch.isActive TO	majs.Bat
+ROUTE majs.On TO time.enabled
+ROUTE majs.Off TO timeVao.enabled
+ROUTE touch.touchTime TO time.startTime
+ROUTE touch.touchTime TO timeVao.startTime
+ROUTE time.fraction_changed	TO oiRa.set_fraction
+ROUTE timeVao.fraction_changed TO oiVao.set_fraction
+ROUTE time.fraction_changed	TO piRa.set_fraction
+ROUTE timeVao.fraction_changed TO piRa.set_fraction
+ROUTE oiRa.value_changed TO truquay.rotation
+ROUTE oiVao.value_changed TO truquay.rotation
+ROUTE piRa.value_changed TO truquay.translation
+ROUTE piVao.value_changed TO truquay.translation
