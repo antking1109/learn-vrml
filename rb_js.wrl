@@ -88,7 +88,7 @@ Transform {
 
     				cycleInterval 10
 
-    				loop FALSE
+    				loop TRUE
 
 				}
 				DEF	majs Script	{
@@ -117,7 +117,7 @@ Transform {
 	]
 	ROUTE touch.isActive TO	majs.Bat
 	ROUTE majs.On TO Clock.enabled
-	ROUTE touch.touchTime TO Clock.startTime
+
 	ROUTE Clock.fraction_changed TO	or.set_fraction
 	ROUTE Clock.fraction_changed TO	pos.set_fraction
 	ROUTE or.value_changed TO robot.rotation

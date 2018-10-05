@@ -174,7 +174,7 @@ ROUTE touch.touchTime TO timeVao.startTime
 ROUTE time.fraction_changed	TO oiRa.set_fraction
 ROUTE timeVao.fraction_changed TO oiVao.set_fraction
 ROUTE time.fraction_changed	TO piRa.set_fraction
-ROUTE timeVao.fraction_changed TO piRa.set_fraction
+ROUTE timeVao.fraction_changed TO piVao.set_fraction
 ROUTE oiRa.value_changed TO truquay.rotation
 ROUTE oiVao.value_changed TO truquay.rotation
 ROUTE piRa.value_changed TO truquay.translation
